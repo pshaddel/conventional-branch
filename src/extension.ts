@@ -5,6 +5,8 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     "conventional-branch.newBranch",
     async () => {
+      //
+
       // read the format from settings
       const settings = await fetchSettings();
       const {
@@ -26,10 +28,16 @@ export function activate(context: vscode.ExtensionContext) {
           if (value) {
             values.push(value);
           }
+          if (!value) {
+            return;
+          }
         } else if (field === "TicketNumber") {
           const value = await fetchText("Ticket Number");
           if (value) {
             values.push(value);
+          }
+          if (!value) {
+            return;
           }
         } else if (field === "Branch") {
           let value = await fetchText(
@@ -37,6 +45,9 @@ export function activate(context: vscode.ExtensionContext) {
             maxBranchNameLength,
             minBranchNameLength
           );
+          if (!value) {
+            return;
+          }
           if (forceBranchNameLowerCase && value) {
             value = value.toLowerCase();
           }
@@ -55,6 +66,9 @@ export function activate(context: vscode.ExtensionContext) {
           if (value) {
             values.push(value);
           }
+          if (!value) {
+            return;
+          }
         }
       }
       // replace the fields with the values
@@ -68,6 +82,8 @@ export function activate(context: vscode.ExtensionContext) {
 
       // show the branch name
       try {
+        // do not run anything if user hit escape
+
         await runGitCommand(`git checkout -b ${branch}`);
         // vscode.window.showInformationMessage(`Branch ${branch} created`, {
         // });
