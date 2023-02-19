@@ -18,6 +18,13 @@
       }
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pshaddel/conventional-branch"
+  },
+  "bugs": {
+    "url": "https://github.com/pshaddel/conventional-branch/issues"
+  },
   "author": {
     "name": "Poorshad Shaddel",
     "url": "https://github.com/pshaddel"
@@ -28,7 +35,7 @@
     "Git",
     "Branch Naming"
   ],
-  "icon": "./icon.png",
+  "icon": "icon.png",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",

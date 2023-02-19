@@ -1,4 +1,12 @@
 import * as vscode from "vscode";
+
+const SETTING_DEFAULT_BRANCH_NAME_LENGTH = 50;
+const SETTING_DEFAULT_SEPARATOR = "-";
+const SETTING_DEFAULT_FORMAT = "{Type}/{TicketNumber}/{Branch}";
+// const SETTING_DEFAULT_FORMAT = "{AUTHOR}/{Type}/JIRA-{TicketNumber}/{Branch}";
+const SETTING_DEFAULT_FORCE_BRANCH_NAME_LOWER_CASE = true;
+const SETTING_DEFAULT_REMOVE_BRANCH_NAME_WHITE_SPACE = true;
+
 interface Settings {
   format: string;
   maxBranchNameLength: number;
@@ -75,10 +83,3 @@ export async function fetchSettings(): Promise<Settings> {
     removeBranchNameWhiteSpace,
   };
 }
-
-const SETTING_DEFAULT_BRANCH_NAME_LENGTH = 50;
-const SETTING_DEFAULT_SEPARATOR = "-";
-const SETTING_DEFAULT_FORMAT = "{Type}/{TicketNumber}/{Branch}";
-// const SETTING_DEFAULT_FORMAT = "{AUTHOR}/{Type}/JIRA-{TicketNumber}/{Branch}";
-const SETTING_DEFAULT_FORCE_BRANCH_NAME_LOWER_CASE = true;
-const SETTING_DEFAULT_REMOVE_BRANCH_NAME_WHITE_SPACE = true;

@@ -1,20 +1,23 @@
-# conventional-branch README
+# Conventional Branch
 
-This is the README for your extension "conventional-branch". After writing up a brief description, we recommend including the following sections.
+Conventional Branch" is a tool designed to help standardize branch names in Git for teams working on large projects. The extension allows you to choose from several pre-defined templates, which can be customized to suit your team's specific needs. Once a template is selected, you can easily create new branches with standardized names directly from your IDE. This helps to avoid confusion and promote consistency in branch naming conventions across the team. With "Conventional Branch", you can spend less time thinking about branch names and more time focusing on your work.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Base thing we are using is a format which is by default: `{Type}/{TicketNumber}/{Branch}`
 
-For example if there is an image subfolder under your extension project workspace:
+Type is an enum that contains different types of branch like `feat`, `bug` and some other options.
 
-\!\[feature X\]\(images/feature-x.png\)
+`Branch` is also something special. It is the branch name. By default some operations are enabled for branch name. For example we are removing the whitespaces. Or we are converting the text to lower case. These are customaizable options.
+
+### Choose Your Desired Template!
+
+Feel free to choose your own template. An example is this:
+`{AUTHOR}/JIRA-{TicketNumber}/{Type}/{Branch}`
+
+The prompt will first ask you for Author!
 
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
 ## Extension Settings
 
@@ -24,12 +27,8 @@ For example:
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- `myExtension.enable`: Enable/disable this extension.
+- `myExtension.thing`: Set to `blah` to do something.
 
 ## Release Notes
 
@@ -39,33 +38,15 @@ Users appreciate release notes as you update your extension.
 
 Initial release of ...
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
 ## Following extension guidelines
 
 Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+- [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
 ## For more information
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
+- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
