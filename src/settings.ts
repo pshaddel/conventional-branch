@@ -6,17 +6,21 @@ const SETTING_DEFAULT_FORMAT = "{Type}/{TicketNumber}/{Branch}";
 // const SETTING_DEFAULT_FORMAT = "{AUTHOR}/{Type}/JIRA-{TicketNumber}/{Branch}";
 const SETTING_DEFAULT_FORCE_BRANCH_NAME_LOWER_CASE = true;
 const SETTING_DEFAULT_REMOVE_BRANCH_NAME_WHITE_SPACE = true;
-
+const SETTING_DEFAULT_MIN_BRANCH_NAME_LENGTH = 2;
 interface Settings {
   format: string;
   maxBranchNameLength: number;
   separator: string;
   forceBranchNameLowerCase: boolean;
   removeBranchNameWhiteSpace: boolean;
+  minBranchNameLength: number;
 }
 export async function fetchSettings(): Promise<Settings> {
   const config = vscode.workspace.getConfiguration("conventional-branch");
   let format: string | undefined = config.get("format");
+  let minBranchNameLength: number | undefined = config.get(
+    "minBranchNameLength"
+  );
   let maxBranchNameLength: number | undefined = config.get(
     "maxBranchNameLength"
   );
@@ -75,11 +79,21 @@ export async function fetchSettings(): Promise<Settings> {
     );
     maxBranchNameLength = SETTING_DEFAULT_BRANCH_NAME_LENGTH;
   }
+  if (minBranchNameLength === undefined) {
+    config.update(
+      "minBranchNameLength",
+      0,
+      vscode.ConfigurationTarget.Workspace,
+      true
+    );
+    minBranchNameLength = SETTING_DEFAULT_MIN_BRANCH_NAME_LENGTH;
+  }
   return {
     format,
     maxBranchNameLength,
     separator,
     forceBranchNameLowerCase,
     removeBranchNameWhiteSpace,
+    minBranchNameLength,
   };
 }

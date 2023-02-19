@@ -10,6 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
       const {
         format,
         maxBranchNameLength,
+        minBranchNameLength,
         separator,
         forceBranchNameLowerCase,
         removeBranchNameWhiteSpace,
@@ -31,7 +32,11 @@ export function activate(context: vscode.ExtensionContext) {
             values.push(value);
           }
         } else if (field === "Branch") {
-          let value = await fetchText("Branch Name", maxBranchNameLength);
+          let value = await fetchText(
+            "Branch Name",
+            maxBranchNameLength,
+            minBranchNameLength
+          );
           if (forceBranchNameLowerCase && value) {
             value = value.toLowerCase();
           }
@@ -62,7 +67,15 @@ export function activate(context: vscode.ExtensionContext) {
       branch = branch.replace(/}/g, "");
 
       // show the branch name
-      vscode.window.showInformationMessage(branch);
+      try {
+        await runGitCommand(`git checkout -b ${branch}`);
+        // vscode.window.showInformationMessage(`Branch ${branch} created`, {
+        // });
+      } catch (error) {
+        vscode.window.showInformationMessage(
+          `We want to create this branch: ${branch} but we got this error: ${error}`
+        );
+      }
     }
   );
 
@@ -81,10 +94,19 @@ async function fetchType() {
   return type;
 }
 
-async function fetchText(field: string, maxLength?: number) {
+async function fetchText(
+  field: string,
+  maxLength?: number,
+  minLength?: number
+) {
   return vscode.window.showInputBox({
     placeHolder: `Enter a ${field}`,
     validateInput: (value) => {
+      if (minLength) {
+        if (!value || value.length < minLength) {
+          return `${field} must be at least ${minLength} characters`;
+        }
+      }
       if (!maxLength) {
         return;
       }
