@@ -1,0 +1,103 @@
+{
+  "name": "conventional-branch",
+  "displayName": "Conventional Branch",
+  "description": "Customizable Conventional Branch for VSCode",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "conventional-branch.newBranch",
+        "title": "Conventional Branch"
+      }
+    ]
+  },
+  "author": {
+    "name": "Poorshad Shaddel",
+    "url": "https://github.com/pshaddel"
+  },
+  "keywords": [
+    "Conventional Branch",
+    "branch",
+    "Git",
+    "Branch Naming"
+  ],
+  "icon": "./icon.png",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "@types/glob": "^8.0.1",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.33.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.4",
+    "@vscode/test-electron": "^2.2.2"
+  },
+  "configuration": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "title": "Conventional Branch",
+    "properties": {
+      "conventional-branch.branchType": {
+        "type": "string",
+        "default": "feature",
+        "enum": [
+          "feature",
+          "fix",
+          "chore",
+          "docs",
+          "refactor",
+          "style",
+          "test"
+        ],
+        "description": "Branch type"
+      },
+      "conventional-branch.branchName": {
+        "type": "string",
+        "description": "Branch name"
+      },
+      "conventional-branch.branchSeparator": {
+        "type": "string",
+        "default": "-",
+        "description": "Branch separator"
+      },
+      "conventional-branch.maxBranchNameLength": {
+        "type": "number",
+        "default": 50,
+        "description": "Max branch name length"
+      },
+      "conventional-branch.forceBranchNameLowerCase": {
+        "type": "boolean",
+        "default": true,
+        "description": "Force branch name to lower case"
+      },
+      "conventional-branch.removeBranchNameWhiteSpace": {
+        "type": "boolean",
+        "default": true,
+        "description": "Remove branch name white space"
+      },
+      "conventional-branch.format": {
+        "type": "string",
+        "default": "{Type}/{TicketNumber}/{Branch}",
+        "description": "Branch format"
+      }
+    }
+  }
+}
