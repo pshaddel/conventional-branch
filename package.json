@@ -19,6 +19,9 @@
       }
     ]
   },
+  "activationEvents": [
+    "onCommand:conventional-branch.newBranch"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pshaddel/conventional-branch"
