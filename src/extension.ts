@@ -80,13 +80,8 @@ export function activate(context: vscode.ExtensionContext) {
       branch = branch.replace(/{/g, "");
       branch = branch.replace(/}/g, "");
 
-      // show the branch name
       try {
-        // do not run anything if user hit escape
-
-        await runGitCommand(`git checkout -b ${branch}`);
-        // vscode.window.showInformationMessage(`Branch ${branch} created`, {
-        // });
+        await useGitApi(branch);
       } catch (error) {
         vscode.window.showInformationMessage(
           `We want to create this branch: ${branch} but we got this error: ${error}`
@@ -156,8 +151,22 @@ function extractFileds(format: string) {
   return fields;
 }
 
-async function runGitCommand(command: string) {
-  const terminal = vscode.window.createTerminal("Git");
-  terminal.sendText(command);
-  terminal.show();
+async function useGitApi(branch: string) {
+  const extension = vscode.extensions.getExtension(
+    "vscode.git"
+  ) as vscode.Extension<any>;
+  if (extension !== undefined) {
+    const gitExtension = extension.isActive
+      ? extension.exports
+      : await extension.activate();
+    const api = gitExtension.getAPI(1);
+    const repository = api.repositories ? api.repositories[0] : undefined;
+    if (!repository) {
+      vscode.window.showErrorMessage("No repository found");
+      return;
+    }
+    await repository.checkout("branch");
+  } else {
+    throw new Error("Git extension not found");
+  }
 }
