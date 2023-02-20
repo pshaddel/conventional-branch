@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { GitExtension } from "./git";
 import { fetchSettings } from "./settings";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -152,20 +153,16 @@ function extractFileds(format: string) {
 }
 
 async function useGitApi(branch: string) {
-  const extension = vscode.extensions.getExtension(
-    "vscode.git"
-  ) as vscode.Extension<any>;
+  const extension =
+    vscode.extensions.getExtension<GitExtension>("vscode.git")?.exports;
   if (extension !== undefined) {
-    const gitExtension = extension.isActive
-      ? extension.exports
-      : await extension.activate();
-    const api = gitExtension.getAPI(1);
+    const api = extension.getAPI(1);
     const repository = api.repositories ? api.repositories[0] : undefined;
     if (!repository) {
       vscode.window.showErrorMessage("No repository found");
       return;
     }
-    await repository.checkout("branch");
+    await repository.createBranch(branch, true);
   } else {
     throw new Error("Git extension not found");
   }
