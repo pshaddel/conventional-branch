@@ -2,7 +2,7 @@
   "name": "conventional-branch",
   "displayName": "Conventional Branch",
   "description": "Customizable Conventional Branch for VSCode",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "pshaddel",
   "engines": {
     "vscode": "^1.75.0"
@@ -12,6 +12,57 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "title": "Conventional Branch",
+      "properties": {
+        "conventional-branch.type": {
+          "type": "array",
+          "default": [
+            "feature",
+            "fix",
+            "hotfix",
+            "docs",
+            "refactor",
+            "style",
+            "test",
+            "release"
+          ],
+          "description": "Branch type"
+        },
+        "conventional-branch.branchNameSeparator": {
+          "type": "string",
+          "default": "-",
+          "description": "Branch separator"
+        },
+        "conventional-branch.maxBranchNameLength": {
+          "type": "number",
+          "default": 50,
+          "description": "Max branch name length"
+        },
+        "conventional-branch.forceBranchNameLowerCase": {
+          "type": "boolean",
+          "default": true,
+          "description": "Force branch name to lower case"
+        },
+        "conventional-branch.removeBranchNameWhiteSpace": {
+          "type": "boolean",
+          "default": true,
+          "description": "Remove branch name white space"
+        },
+        "conventional-branch.format": {
+          "type": "string",
+          "default": "{Type}/{TicketNumber}/{Branch}",
+          "description": "Branch format"
+        },
+        "conventional-branch.minBranchNameLength": {
+          "type": "number",
+          "default": 3,
+          "description": "Min branch name length"
+        }
+      }
+    },
     "commands": [
       {
         "command": "conventional-branch.newBranch",
@@ -60,55 +111,5 @@
     "mocha": "^10.1.0",
     "typescript": "^4.9.4",
     "@vscode/test-electron": "^2.2.2"
-  },
-  "configuration": {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "title": "Conventional Branch",
-    "properties": {
-      "conventional-branch.branchType": {
-        "type": "string",
-        "default": "feature",
-        "enum": [
-          "feature",
-          "fix",
-          "chore",
-          "docs",
-          "refactor",
-          "style",
-          "test"
-        ],
-        "description": "Branch type"
-      },
-      "conventional-branch.branchName": {
-        "type": "string",
-        "description": "Branch name"
-      },
-      "conventional-branch.branchSeparator": {
-        "type": "string",
-        "default": "-",
-        "description": "Branch separator"
-      },
-      "conventional-branch.maxBranchNameLength": {
-        "type": "number",
-        "default": 50,
-        "description": "Max branch name length"
-      },
-      "conventional-branch.forceBranchNameLowerCase": {
-        "type": "boolean",
-        "default": true,
-        "description": "Force branch name to lower case"
-      },
-      "conventional-branch.removeBranchNameWhiteSpace": {
-        "type": "boolean",
-        "default": true,
-        "description": "Remove branch name white space"
-      },
-      "conventional-branch.format": {
-        "type": "string",
-        "default": "{Type}/{TicketNumber}/{Branch}",
-        "description": "Branch format"
-      }
-    }
   }
 }

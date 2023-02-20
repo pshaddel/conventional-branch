@@ -6,9 +6,11 @@ Conventional Branch" is a tool designed to help standardize branch names in Git 
 
 ## Features
 
-Base thing we are using is a format which is by default: `{Type}/{TicketNumber}/{Branch}`
+Base thing we are using is a format which is by default:
 
-Type is an enum that contains different types of branch like `feat`, `bug` and some other options.
+`{Type}/{TicketNumber}/{Branch}`
+
+`Type` is a special name. It is an enum that contains different types of branch like `feat`, `bug` and some other options(you can change it via settings).
 
 `Branch` is also something special. It is the branch name. By default some operations are enabled for branch name. For example we are removing the whitespaces. Or we are converting the text to lower case. These are customaizable options.
 
@@ -17,38 +19,22 @@ Type is an enum that contains different types of branch like `feat`, `bug` and s
 Feel free to choose your own template. An example is this:
 `{AUTHOR}/JIRA-{TicketNumber}/{Type}/{Branch}`
 
-The prompt will first ask you for Author!
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Settings
 
-For example:
-
-This extension contributes the following settings:
-
-- `myExtension.enable`: Enable/disable this extension.
-- `myExtension.thing`: Set to `blah` to do something.
+| Property                                       | Description                                                                        | Default Value                                                         |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| conventional-branch.type                       | An array that contains different type of branches.                                 | ["feature","fix","hotfix","docs","refactor","style","test","release"] |
+| conventional-branch.branchNameSeparator        | Branch string must be separated by something. It could be space, dash or anything. | "-"                                                                   |
+| conventional-branch.maxBranchNameLength        | Set a maximum lenght for the branch name.                                          | 50                                                                    |
+| conventional-branch.forceBranchNameLowerCase   | A boolean that converts branch name to lower case                                  | true                                                                  |
+| conventional-branch.removeBranchNameWhiteSpace | Removes whitespaces from branch.                                                   | true                                                                  |
+| conventional-branch.format                     | Format for creating branch.                                                        | "{Type}/{TicketNumber}/{Branch}"                                      |
+| conventional-branch.minBranchNameLength        | Minimum lengh for branch name.                                                     | 3                                                                     |
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
-
-Initial release of ...
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-- [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## For more information
-
-- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**

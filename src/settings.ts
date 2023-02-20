@@ -3,97 +3,58 @@ import * as vscode from "vscode";
 const SETTING_DEFAULT_BRANCH_NAME_LENGTH = 50;
 const SETTING_DEFAULT_SEPARATOR = "-";
 const SETTING_DEFAULT_FORMAT = "{Type}/{TicketNumber}/{Branch}";
-// const SETTING_DEFAULT_FORMAT = "{AUTHOR}/{Type}/JIRA-{TicketNumber}/{Branch}";
 const SETTING_DEFAULT_FORCE_BRANCH_NAME_LOWER_CASE = true;
 const SETTING_DEFAULT_REMOVE_BRANCH_NAME_WHITE_SPACE = true;
-const SETTING_DEFAULT_MIN_BRANCH_NAME_LENGTH = 2;
+const SETTING_DEFAULT_MIN_BRANCH_NAME_LENGTH = 3;
+const SETTING_DEFAULT_BRANCH_TYPE = [
+  "feature",
+  "fix",
+  "hotfix",
+  "docs",
+  "release",
+  "refactor",
+  "style",
+  "test",
+];
 interface Settings {
   format: string;
   maxBranchNameLength: number;
-  separator: string;
+  branchNameSeparator: string;
   forceBranchNameLowerCase: boolean;
   removeBranchNameWhiteSpace: boolean;
   minBranchNameLength: number;
+  type: string[];
 }
 export async function fetchSettings(): Promise<Settings> {
   const config = vscode.workspace.getConfiguration("conventional-branch");
-  let format: string | undefined = config.get("format");
-  let minBranchNameLength: number | undefined = config.get(
+  const format: string | undefined = config.get("format");
+  const type: string[] | undefined = config.get("type");
+  const minBranchNameLength: number | undefined = config.get(
     "minBranchNameLength"
   );
-  let maxBranchNameLength: number | undefined = config.get(
+  const maxBranchNameLength: number | undefined = config.get(
     "maxBranchNameLength"
   );
-  let separator: string | undefined = config.get("separator");
-  let forceBranchNameLowerCase: boolean | undefined = config.get(
+  const branchNameSeparator: string | undefined = config.get("separator");
+  const forceBranchNameLowerCase: boolean | undefined = config.get(
     "forceBranchNameLowerCase"
   );
-  let removeBranchNameWhiteSpace: boolean | undefined = config.get(
+  const removeBranchNameWhiteSpace = config.get(
     "removeBranchNameWhiteSpace"
-  );
+  ) as boolean;
 
-  if (forceBranchNameLowerCase === undefined) {
-    config.update(
-      "forceBranchNameLowerCase",
-      SETTING_DEFAULT_FORCE_BRANCH_NAME_LOWER_CASE,
-      vscode.ConfigurationTarget.Workspace,
-      true
-    );
-    forceBranchNameLowerCase = SETTING_DEFAULT_FORCE_BRANCH_NAME_LOWER_CASE;
-  }
-  if (removeBranchNameWhiteSpace === undefined) {
-    config.update(
-      "removeBranchNameWhiteSpace",
-      SETTING_DEFAULT_REMOVE_BRANCH_NAME_WHITE_SPACE,
-      vscode.ConfigurationTarget.Workspace,
-      true
-    );
-    removeBranchNameWhiteSpace = SETTING_DEFAULT_REMOVE_BRANCH_NAME_WHITE_SPACE;
-  }
-
-  if (separator === undefined) {
-    config.update(
-      "separator",
-      SETTING_DEFAULT_SEPARATOR,
-      vscode.ConfigurationTarget.Workspace,
-      true
-    );
-    separator = SETTING_DEFAULT_SEPARATOR;
-  }
-  if (format === undefined) {
-    config.update(
-      "format",
-      SETTING_DEFAULT_FORMAT,
-      vscode.ConfigurationTarget.Workspace,
-      true
-    );
-    format = SETTING_DEFAULT_FORMAT;
-  }
-  // save the default maxBranchNameLength in the settings if it doesn't exist
-  if (maxBranchNameLength === undefined) {
-    config.update(
-      "maxBranchNameLength",
-      50,
-      vscode.ConfigurationTarget.Workspace,
-      true
-    );
-    maxBranchNameLength = SETTING_DEFAULT_BRANCH_NAME_LENGTH;
-  }
-  if (minBranchNameLength === undefined) {
-    config.update(
-      "minBranchNameLength",
-      0,
-      vscode.ConfigurationTarget.Workspace,
-      true
-    );
-    minBranchNameLength = SETTING_DEFAULT_MIN_BRANCH_NAME_LENGTH;
-  }
   return {
-    format,
-    maxBranchNameLength,
-    separator,
-    forceBranchNameLowerCase,
-    removeBranchNameWhiteSpace,
-    minBranchNameLength,
+    format: format || SETTING_DEFAULT_FORMAT,
+    maxBranchNameLength:
+      maxBranchNameLength || SETTING_DEFAULT_BRANCH_NAME_LENGTH,
+    branchNameSeparator: branchNameSeparator || SETTING_DEFAULT_SEPARATOR,
+    forceBranchNameLowerCase:
+      forceBranchNameLowerCase || SETTING_DEFAULT_FORCE_BRANCH_NAME_LOWER_CASE,
+    removeBranchNameWhiteSpace:
+      removeBranchNameWhiteSpace ||
+      SETTING_DEFAULT_REMOVE_BRANCH_NAME_WHITE_SPACE,
+    minBranchNameLength:
+      minBranchNameLength || SETTING_DEFAULT_MIN_BRANCH_NAME_LENGTH,
+    type: type || SETTING_DEFAULT_BRANCH_TYPE,
   };
 }

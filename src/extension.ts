@@ -14,9 +14,10 @@ export function activate(context: vscode.ExtensionContext) {
         format,
         maxBranchNameLength,
         minBranchNameLength,
-        separator,
+        branchNameSeparator,
         forceBranchNameLowerCase,
         removeBranchNameWhiteSpace,
+        type,
       } = settings;
 
       // extract the fields from the format
@@ -25,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
       const values: string[] = [];
       for await (const field of fields) {
         if (field === "Type") {
-          const value = await fetchType();
+          const value = await fetchType(type);
           if (value) {
             values.push(value);
           }
@@ -57,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
           }
           // replace spaces with separator
           if (value) {
-            value = value.replace(/\s/g, separator);
+            value = value.replace(/\s/g, branchNameSeparator);
           }
           if (value) {
             values.push(value);
@@ -96,13 +97,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {}
 
-async function fetchType() {
-  const type = await vscode.window.showQuickPick(
-    ["feature", "fix", "hotfix", "docs", "refactor", "style", "test"],
-    {
-      placeHolder: "Select a Branch Type",
-    }
-  );
+async function fetchType(types: string[]) {
+  const type = await vscode.window.showQuickPick(types, {
+    placeHolder: "Select a Branch Type",
+  });
   return type;
 }
 
