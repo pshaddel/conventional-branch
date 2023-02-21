@@ -62,3 +62,25 @@ jobs:
       - name: Print release output
         if: ${{ steps.release.outputs.released == 'true' }}
         run: echo Release ID ${{ steps.release.outputs.release_id }}
+      - name: Setup
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16
+      - name: Install Packages
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: npm install
+      - name: Lint
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: npm run lint
+      - name: Test
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: npm run test
+      - name: Prepublish
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: npm run vscode:prepublish
+      - name: Publish to VS Marketplace
+        uses: HaaLeo/publish-vscode-extension@v1
+        if: ${{ steps.release.outputs.released == 'true' }}
+        with:
+          pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
+          registryUrl: https://marketplace.visualstudio.com
