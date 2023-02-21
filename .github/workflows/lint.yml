@@ -16,12 +16,12 @@ jobs: # list of things to do
     runs-on: ubuntu-latest # on which machine to run
     steps: # list of steps
       - name: Install NodeJS
-        uses: actions/setup-node@3.6.0
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Code Checkout
-        uses: actions/checkout@3.3.0
+        uses: actions/checkout@v3.3.0
 
       - name: Install Dependencies
         run: npm ci
