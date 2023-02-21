@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - "*"
-  pull_request:
-    branches:
-      - master
 pull_request: # on a pull request to each of these branches
 branches:
   - development
