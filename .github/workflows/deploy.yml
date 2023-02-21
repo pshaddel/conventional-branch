@@ -5,18 +5,34 @@ on:
       - main
 
 jobs:
-  deplloy:
+  Deploy:
     permissions: write-all
     name: Release
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup
+        uses: actions/setup-node@v1
         with:
-          fetch-depth: 0
+          node-version: 16
+      - name: Install Packages
+        run: npm install
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test
+      - name: Prepublish
+        run: npm run vscode:prepublish
       - name: Release
         uses: justincy/github-action-npm-release@2.0.2
         id: release
       - name: Print release output
         if: ${{ steps.release.outputs.released == 'true' }}
         run: echo Release ID ${{ steps.release.outputs.release_id }}
+      - name: Publish to VS Marketplace
+        uses: HaaLeo/publish-vscode-extension@v1
+        if: ${{ steps.release.outputs.released == 'true' }}
+        with:
+          pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
+          registryUrl: https://marketplace.visualstudio.com
