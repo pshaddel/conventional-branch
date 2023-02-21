@@ -16,17 +16,21 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
-      - name: Install Packages
-        run: npm install
-      - name: Lint
-        run: npm run lint
-      - name: Test
-        run: npm run test
-      - name: Prepublish
-        run: npm run vscode:prepublish
       - name: Release
         uses: justincy/github-action-npm-release@2.0.2
         id: release
+      - name: Install Packages
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: npm install
+      - name: Lint
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: npm run lint
+      - name: Test
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: npm run test
+      - name: Prepublish
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: npm run vscode:prepublish
       - name: Print release output
         if: ${{ steps.release.outputs.released == 'true' }}
         run: echo Release ID ${{ steps.release.outputs.release_id }}
