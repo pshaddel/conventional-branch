@@ -5,7 +5,7 @@ on:
   pull_request:
     branches:
       - main
-name: Deploy Extension
+name: CI
 jobs:
   CI:
     runs-on: macos-latest
@@ -24,8 +24,8 @@ jobs:
         run: npm run test
       - name: Prepublish
         run: npm run vscode:prepublish
-      - name: Publish to VS Marketplace
-        uses: HaaLeo/publish-vscode-extension@v1
-        with:
-          pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
-          registryUrl: https://marketplace.visualstudio.com
+      # - name: Publish to VS Marketplace
+      #   uses: HaaLeo/publish-vscode-extension@v1
+      #   with:
+      #     pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
+      #     registryUrl: https://marketplace.visualstudio.com
