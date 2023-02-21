@@ -6,6 +6,7 @@ on:
 
 jobs:
   deplloy:
+    permissions: write-all
     name: Release
     runs-on: ubuntu-latest
     steps:
