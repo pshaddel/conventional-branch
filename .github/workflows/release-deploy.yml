@@ -48,6 +48,7 @@ on:
 
 jobs:
   build:
+    permissions: write-all
     name: Release
     runs-on: ubuntu-latest
     steps:
