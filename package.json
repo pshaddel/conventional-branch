@@ -8,7 +8,9 @@
     "vscode": "^1.75.0"
   },
   "categories": [
-    "Other"
+    "SCM Providers",
+    "Version Control",
+    "Git"
   ],
   "main": "./out/extension.js",
   "contributes": {
