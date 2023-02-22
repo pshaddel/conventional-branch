@@ -19,9 +19,12 @@ Base thing we are using is a format which is by default:
 Feel free to choose your own template. An example is this:
 `{AUTHOR}/JIRA-{TicketNumber}/{Type}/{Branch}`
 
-## Extension Settings
+## Usage
 
-## Settings
+You can access VSCode Conventional Branch by using
+`Command + Shift + P` or `Ctrl + Shift + P`, enter `Conventional Branch`, and press Enter.
+
+## Extension Settings
 
 | Property                                       | Description                                                                        | Default Value                                                         |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
