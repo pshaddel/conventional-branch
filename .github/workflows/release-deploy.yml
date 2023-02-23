@@ -1,45 +1,3 @@
-# name: Release
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   Deploy:
-#     permissions: write-all
-#     name: Release
-#     runs-on: macos-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3.3.0
-#       - name: Setup
-#         uses: actions/setup-node@v3.6.0
-#         with:
-#           node-version: 16
-#       - name: Install Packages
-#         # if: ${{ steps.release.outputs.released == 'true' }}
-#         run: npm install
-#       - name: Lint
-#         # if: ${{ steps.release.outputs.released == 'true' }}
-#         run: npm run lint
-#       - name: Test
-#         # if: ${{ steps.release.outputs.released == 'true' }}
-#         run: npm run test
-#       - name: Prepublish
-#         # if: ${{ steps.release.outputs.released == 'true' }}
-#         run: npm run vscode:prepublish
-#       - name: Release
-#         uses: justincy/github-action-npm-release@2.0.1
-#         id: release
-#       - name: Print release output
-#         if: ${{ steps.release.outputs.released == 'true' }}
-#         run: echo Release ID ${{ steps.release.outputs.release_id }}
-#       - name: Publish to VS Marketplace
-#         uses: HaaLeo/publish-vscode-extension@v1
-#         if: ${{ steps.release.outputs.released == 'true' }}
-#         with:
-#           pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
-#           registryUrl: https://marketplace.visualstudio.com
 name: Release
 on:
   push:
@@ -84,3 +42,7 @@ jobs:
         with:
           pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
           registryUrl: https://marketplace.visualstudio.com
+      - name: Publish to Open VSX Registry
+        uses: HaaLeo/publish-vscode-extension@v1
+        with:
+          pat: ${{ secrets.OPEN_VSX_TOKEN }}
