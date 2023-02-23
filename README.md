@@ -1,10 +1,20 @@
 # Conventional Branch
 
+![release](https://github.com/pshaddel/conventional-branch/actions/workflows/release-deploy.yml/badge.svg)
+![cicd](https://github.com/pshaddel/conventional-branch/actions/workflows/cicd.yml/badge.svg)
 <p align="center">
 <img src="icon-title.png" width="65%">  
 </p>
 
 Conventional Branch" is a tool designed to help standardize branch names in Git for teams working on large projects. The extension allows you to choose from several pre-defined templates, which can be customized to suit your team's specific needs. Once a template is selected, you can easily create new branches with standardized names directly from your IDE. This helps to avoid confusion and promote consistency in branch naming conventions across the team. With "Conventional Branch", you can spend less time thinking about branch names and more time focusing on your work.
+
+## Usage
+<p align="center">
+<img src="https://user-images.githubusercontent.com/43247296/221052455-9859b8c1-f478-438f-b893-2d6b0fbe9280.gif" width="65%">  
+</p>
+
+You can access VSCode Conventional Branch by using
+`Command + Shift + P` or `Ctrl + Shift + P`, enter `Conventional Branch`, and press Enter.
 
 ## Features
 
@@ -21,11 +31,6 @@ Base thing we are using is a format which is by default:
 Feel free to choose your own template. An example is this:
 `{AUTHOR}/JIRA-{TicketNumber}/{Type}/{Branch}`
 
-## Usage
-
-You can access VSCode Conventional Branch by using
-`Command + Shift + P` or `Ctrl + Shift + P`, enter `Conventional Branch`, and press Enter.
-
 ## Extension Settings
 
 | Property                                       | Description                                                                        | Default Value                                                         |
@@ -37,9 +42,3 @@ You can access VSCode Conventional Branch by using
 | conventional-branch.removeBranchNameWhiteSpace | Removes whitespaces from branch.                                                   | true                                                                  |
 | conventional-branch.format                     | Format for creating branch.                                                        | "{Type}/{TicketNumber}/{Branch}"                                      |
 | conventional-branch.minBranchNameLength        | Minimum lengh for branch name.                                                     | 3                                                                     |
-
-## Release Notes
-
-### 1.0.0
-
-**Enjoy!**
