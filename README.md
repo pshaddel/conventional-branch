@@ -1,7 +1,7 @@
 # Conventional Branch
 
 <p align="center">
-<img src="icon-title.png" width="50%">  
+<img src="icon-title.png" width="65%">  
 </p>
 
 Conventional Branch" is a tool designed to help standardize branch names in Git for teams working on large projects. The extension allows you to choose from several pre-defined templates, which can be customized to suit your team's specific needs. Once a template is selected, you can easily create new branches with standardized names directly from your IDE. This helps to avoid confusion and promote consistency in branch naming conventions across the team. With "Conventional Branch", you can spend less time thinking about branch names and more time focusing on your work.
