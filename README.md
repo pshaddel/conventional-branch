@@ -24,6 +24,10 @@ Examples of templates:
 * `myGithubUserName/Trello-{IssueNumber}/{Branch}`
 * `{Type}/{Branch}`
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/43247296/221375775-4f64a93b-a9f5-4226-b46f-62c61d93b255.gif" width="65%">  
+  </p>
+
 ## Features
 
 Base thing we are using is a format which is by default:
@@ -33,11 +37,6 @@ Base thing we are using is a format which is by default:
 `Type` is a special name. It is an enum that contains different types of branch like `feat`, `bug` and some other options(you can change it via settings).
 
 `Branch` is also something special. It is the branch name. By default some operations are enabled for branch name. For example we are removing the whitespaces. Or we are converting the text to lower case. These are customaizable options.
-
-### Choose Your Desired Template!
-
-Feel free to choose your own template. An example is this:
-`{AUTHOR}/JIRA-{TicketNumber}/{Type}/{Branch}`
 
 ## Extension Settings
 
