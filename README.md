@@ -10,11 +10,19 @@ Conventional Branch" is a tool designed to help standardize branch names in Git 
 
 ## Usage
 <p align="center">
-<img src="https://user-images.githubusercontent.com/43247296/221052455-9859b8c1-f478-438f-b893-2d6b0fbe9280.gif" width="65%">  
+<img src="https://user-images.githubusercontent.com/43247296/221373876-7bc68f97-1ed2-4a73-b67c-d0a3eb74c5bd.gif" width="65%">  
 </p>
 
 You can access VSCode Conventional Branch by using
 `Command + Shift + P` or `Ctrl + Shift + P`, enter `Conventional Branch`, and press Enter.
+### How to Customize Branch Name Template
+Got to <b>User Settings > Conventionl Branch > format<b>
+You can change the default format and keep in mind that these are reserved keywords in this template: `Branch`, `TicketNumber` and `Type`.
+
+Examples of templates:
+* `{Author}/{Type}/JIRA-{TicketNumber}/{Branch}`
+* `myGithubUserName/Trello-{IssueNumber}/{Branch}`
+* `{Type}/{Branch}`
 
 ## Features
 
