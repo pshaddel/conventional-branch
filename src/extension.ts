@@ -130,7 +130,7 @@ async function fetchText(
 /**
  * fetch string out of text which are wrapped in {} for example if we give this string "{Type}/{TicketNumber}/{Branch}" we expect an array: ["Type", "TicketNumber", "Branch"]
  *  */
-function extractFileds(format: string) {
+export function extractFileds(format: string): string[] {
   const regex = /\{([^}]+)\}/g;
   const fields: string[] = [];
   let m;
