@@ -16,7 +16,7 @@ Conventional Branch" is a tool designed to help standardize branch names in Git 
 You can access VSCode Conventional Branch by using
 `Command + Shift + P` or `Ctrl + Shift + P`, enter `Conventional Branch`, and press Enter.
 ### How to Customize Branch Name Template
-Got to <b>User Settings > Conventionl Branch > format<b>
+Got to <b>User Settings > Conventionl Branch > format</b>
 You can change the default format and keep in mind that these are reserved keywords in this template: `Branch`, `TicketNumber` and `Type`.
 
 Examples of templates:
@@ -27,6 +27,21 @@ Examples of templates:
 <p align="center">
 <img src="https://user-images.githubusercontent.com/43247296/221375775-4f64a93b-a9f5-4226-b46f-62c61d93b255.gif" width="65%">  
   </p>
+
+### How to add Conventional Branch setting to your Workspace Settings
+In .vscode > settings.json you can use conventional branch settings.
+```json
+{
+  "conventional-branch.format": "{Author}/{Type}/JIRA-{TicketNumber}/{Branch}",
+  "conventional-branch.type": ["feature", "fix", "hotfix"],
+  "conventional-branch.branchNameSeparator": "-",
+  "conventional-branch.maxBranchNameLength": 50,
+  "conventional-branch.minBranchNameLength": 5,
+  "conventional-branch.forceBranchNameLowerCase": true,
+  "conventional-branch.removeBranchNameWhiteSpace": true
+}
+```
+
 
 ## Features
 
@@ -42,7 +57,7 @@ Base thing we are using is a format which is by default:
 
 | Property                                       | Description                                                                        | Default Value                                                         |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| conventional-branch.type                       | An array that contains different type of branches.                                 | ["feature","fix","hotfix","docs","refactor","style","test","release"] |
+| conventional-branch.type                       | An array that contains different type of branches.                                 | ["feature","fix","hotfix","test","release"] |
 | conventional-branch.branchNameSeparator        | Branch string must be separated by something. It could be space, dash or anything. | "-"                                                                   |
 | conventional-branch.maxBranchNameLength        | Set a maximum lenght for the branch name.                                          | 50                                                                    |
 | conventional-branch.forceBranchNameLowerCase   | A boolean that converts branch name to lower case                                  | true                                                                  |
