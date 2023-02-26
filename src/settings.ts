@@ -10,10 +10,7 @@ const SETTING_DEFAULT_BRANCH_TYPE = [
   "feature",
   "fix",
   "hotfix",
-  "docs",
   "release",
-  "refactor",
-  "style",
   "test",
 ];
 interface Settings {

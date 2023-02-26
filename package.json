@@ -23,10 +23,6 @@
             "feature",
             "fix",
             "hotfix",
-            "docs",
-            "refactor",
-            "style",
-            "test",
             "release"
           ],
           "description": "Branch type"
