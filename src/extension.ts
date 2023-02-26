@@ -27,20 +27,16 @@ export function activate(context: vscode.ExtensionContext) {
       for await (const field of fields) {
         if (field === "Type") {
           const value = await fetchType(type);
-          if (value) {
-            values.push(value);
-          }
           if (!value) {
             return;
           }
+          values.push(value);
         } else if (field === "TicketNumber") {
           const value = await fetchText("Ticket Number");
-          if (value) {
-            values.push(value);
-          }
           if (!value) {
             return;
           }
+          values.push(value);
         } else if (field === "Branch") {
           let value = await fetchText(
             "Branch Name",
@@ -50,19 +46,17 @@ export function activate(context: vscode.ExtensionContext) {
           if (!value) {
             return;
           }
-          if (forceBranchNameLowerCase && value) {
+
+          if (forceBranchNameLowerCase) {
             value = value.toLowerCase();
           }
-          if (removeBranchNameWhiteSpace && value) {
+          if (removeBranchNameWhiteSpace) {
             value = (value as string).trim();
           }
           // replace spaces with separator
-          if (value) {
-            value = value.replace(/\s/g, branchNameSeparator);
-          }
-          if (value) {
-            values.push(value);
-          }
+          value = value.replace(/\s/g, branchNameSeparator);
+
+          values.push(value);
         } else {
           const value = await fetchText(field);
           if (value) {
@@ -165,3 +159,26 @@ async function useGitApi(branch: string) {
     throw new Error("Git extension not found");
   }
 }
+
+export const branchNameStringConverter = (
+  value: string,
+  {
+    forceBranchNameLowerCase,
+    removeBranchNameWhiteSpace,
+    branchNameSeparator,
+  }: {
+    forceBranchNameLowerCase: boolean;
+    removeBranchNameWhiteSpace: boolean;
+    branchNameSeparator: string;
+  }
+) => {
+  if (forceBranchNameLowerCase) {
+    value = value.toLowerCase();
+  }
+  if (removeBranchNameWhiteSpace) {
+    value = (value as string).trim();
+  }
+  // replace spaces with separator
+  value = value.replace(/\s/g, branchNameSeparator);
+  return value;
+};
