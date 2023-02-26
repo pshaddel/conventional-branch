@@ -22,6 +22,7 @@
           "default": [
             "feature",
             "fix",
+            "test"
             "hotfix",
             "release"
           ],
