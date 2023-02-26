@@ -31,7 +31,7 @@ suite("Extension Test Suite", () => {
       "removeBranchNameWhiteSpace"
     ) as boolean;
 
-    assert.strictEqual(format, "feature/{TicketNumber}/{Branch}");
+    assert.strictEqual(format, "{Type}/{TicketNumber}/{Branch}");
     assert.strictEqual(type, ["feature", "fix", "hotfix", "release", "test"]);
     assert.strictEqual(minBranchNameLength, 3);
     assert.strictEqual(maxBranchNameLength, 50);
