@@ -20,6 +20,7 @@ interface Settings {
   forceBranchNameLowerCase: boolean;
   removeBranchNameWhiteSpace: boolean;
   minBranchNameLength: number;
+  forcedParentBranch?: string | null;
   type: string[];
 }
 export async function fetchSettings(): Promise<Settings> {
@@ -40,6 +41,8 @@ export async function fetchSettings(): Promise<Settings> {
     "removeBranchNameWhiteSpace"
   ) as boolean;
 
+  const forcedParentBranch = config.get("forcedParentBranch") as string | null;
+
   return {
     format: format || SETTING_DEFAULT_FORMAT,
     maxBranchNameLength:
@@ -53,5 +56,6 @@ export async function fetchSettings(): Promise<Settings> {
     minBranchNameLength:
       minBranchNameLength || SETTING_DEFAULT_MIN_BRANCH_NAME_LENGTH,
     type: type || SETTING_DEFAULT_BRANCH_TYPE,
+    forcedParentBranch,
   };
 }

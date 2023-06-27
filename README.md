@@ -3,14 +3,14 @@
 ![release](https://github.com/pshaddel/conventional-branch/actions/workflows/release-deploy.yml/badge.svg)
 ![cicd](https://github.com/pshaddel/conventional-branch/actions/workflows/cicd.yml/badge.svg)
 <p align="center">
-<img src="icon-title.png" width="65%">  
+<img src="icon-title.png" width="65%">
 </p>
 
 Conventional Branch" is a tool designed to help standardize branch names in Git for teams working on large projects. The extension allows you to choose from several pre-defined templates, which can be customized to suit your team's specific needs. Once a template is selected, you can easily create new branches with standardized names directly from your IDE. This helps to avoid confusion and promote consistency in branch naming conventions across the team. With "Conventional Branch", you can spend less time thinking about branch names and more time focusing on your work.
 
 ## Usage
 <p align="center">
-<img src="https://user-images.githubusercontent.com/43247296/221373876-7bc68f97-1ed2-4a73-b67c-d0a3eb74c5bd.gif" width="65%">  
+<img src="https://user-images.githubusercontent.com/43247296/221373876-7bc68f97-1ed2-4a73-b67c-d0a3eb74c5bd.gif" width="65%">
 </p>
 
 You can access VSCode Conventional Branch by using
@@ -25,7 +25,7 @@ Examples of templates:
 * `{Type}/{Branch}`
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/43247296/221375775-4f64a93b-a9f5-4226-b46f-62c61d93b255.gif" width="65%">  
+<img src="https://user-images.githubusercontent.com/43247296/221375775-4f64a93b-a9f5-4226-b46f-62c61d93b255.gif" width="65%">
   </p>
 
 ### How to add Conventional Branch setting to your Workspace Settings
@@ -53,6 +53,16 @@ Base thing we are using is a format which is by default:
 
 `Branch` is also something special. It is the branch name. By default some operations are enabled for branch name. For example we are removing the whitespaces. Or we are converting the text to lower case. These are customaizable options.
 
+### Force Parent Branch
+Sometimes you want to be sure that every branch you are making with the extension are from specific parent. For example `staging` branch.
+
+For this you can use this setting: `forcedParentBranch`:
+```javascript
+{
+ "conventional-branch.forcedParentBranch":  'staging'
+}
+```
+
 ## Extension Settings
 
 | Property                                       | Description                                                                        | Default Value                                                         |
@@ -64,3 +74,4 @@ Base thing we are using is a format which is by default:
 | conventional-branch.removeBranchNameWhiteSpace | Removes whitespaces from branch.                                                   | true                                                                  |
 | conventional-branch.format                     | Format for creating branch.                                                        | "{Type}/{TicketNumber}/{Branch}"                                      |
 | conventional-branch.minBranchNameLength        | Minimum lengh for branch name.                                                     | 3                                                                     |
+| conventional-branch.forcedParentBranch         | Force Branches to be created from this specific branch                             | null                                                                  |

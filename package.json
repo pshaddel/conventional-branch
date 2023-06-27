@@ -2,7 +2,7 @@
   "name": "conventional-branch",
   "displayName": "Conventional Branch",
   "description": "Customizable Conventional Branch for VSCode",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "pshaddel",
   "engines": {
     "vscode": "^1.75.0"
@@ -57,6 +57,11 @@
           "type": "number",
           "default": 3,
           "description": "Min branch name length"
+        },
+        "conventional-branch.forcedParentBranch": {
+          "type": "string",
+          "default": null,
+          "description": "Forced parent branch"
         }
       }
     },
@@ -67,9 +72,6 @@
       }
     ]
   },
-  "activationEvents": [
-    "onCommand:conventional-branch.newBranch"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pshaddel/conventional-branch"

@@ -14,6 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
         format,
         maxBranchNameLength,
         minBranchNameLength,
+        forcedParentBranch,
         branchNameSeparator,
         forceBranchNameLowerCase,
         removeBranchNameWhiteSpace,
@@ -83,7 +84,7 @@ export function activate(context: vscode.ExtensionContext) {
       branch = branch.replace(/}/g, "");
 
       try {
-        await useGitApi(branch);
+        await useGitApi(branch, forcedParentBranch);
       } catch (error) {
         vscode.window.showInformationMessage(
           `We want to create this branch: ${branch} but we got this error: ${error}`
@@ -150,7 +151,7 @@ function extractFileds(format: string) {
   return fields;
 }
 
-async function useGitApi(branch: string) {
+async function useGitApi(branch: string, forcedParentBranch?: string | null) {
   const extension =
     vscode.extensions.getExtension<GitExtension>("vscode.git")?.exports;
   if (extension !== undefined) {
@@ -160,7 +161,29 @@ async function useGitApi(branch: string) {
       vscode.window.showErrorMessage("No repository found");
       return;
     }
-    await repository.createBranch(branch, true);
+    if (forcedParentBranch) {
+      try {
+        await repository.checkout(forcedParentBranch);
+        try {
+          await repository.createBranch(branch, true);
+        } catch (error) {
+          vscode.window.showErrorMessage(`Failed to create branch ${branch}`);
+          return;
+        }
+      } catch (error) {
+        vscode.window.showErrorMessage(
+          `Failed to checkout ${forcedParentBranch}`
+        );
+        return;
+      }
+    } else {
+      try {
+        await repository.createBranch(branch, true);
+      } catch (error) {
+        vscode.window.showErrorMessage(`Failed to create branch ${branch}`);
+        return;
+      }
+    }
   } else {
     throw new Error("Git extension not found");
   }
