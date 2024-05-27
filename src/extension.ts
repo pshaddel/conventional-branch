@@ -105,7 +105,7 @@ async function fetchType(types: string[]) {
   return type;
 }
 
-async function fetchText(
+export async function fetchText(
   field: string,
   maxLength?: number,
   minLength?: number
