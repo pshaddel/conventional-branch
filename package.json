@@ -98,6 +98,9 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
   },
+  "extensionDependencies": [
+    "vscode.git"
+  ],
   "devDependencies": {
     "@types/vscode": "^1.75.0",
     "@types/glob": "^8.0.1",
