@@ -63,6 +63,12 @@ For this you can use this setting: `forcedParentBranch`:
 }
 ```
 
+### Common Format Samples
+The most commont one I found is this one:
+```{Type}/{TicketNumber}-{Branch}```
+
+Many code bases are using this format to add ticket number to the branch and at the same time also have a short description for the branch.
+
 ## Extension Settings
 
 | Property                                       | Description                                                                        | Default Value                                                         |
