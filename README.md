@@ -49,9 +49,15 @@ Base thing we are using is a format which is by default:
 
 `{Type}/{TicketNumber}/{Branch}`
 
-`Type` is a special name. It is an enum that contains different types of branch like `feat`, `bug` and some other options(you can change it via settings).
+### Selector Fields
+Selector Fields are the fields that you can select from the dropdown. Use Brackets for defining the selector fields. For example:`{MyType[A,B,C]}/JIRA-{TicketNumber}` will create a dropdown for `MyType` with options `A`, `B` and `C`.
 
-`Branch` is also something special. It is the branch name. By default some operations are enabled for branch name. For example we are removing the whitespaces. Or we are converting the text to lower case. These are customaizable options.
+### Reserved Keywords: `Type`, `Branch`
+#### Type
+It is a special name. It is an enum that contains different types of branch like `feat`, `bug` and some other options(you can change it via settings).
+
+#### Branch
+It is also something special. It is the branch name. By default some operations are enabled for branch name. For example we are removing the whitespaces. Or we are converting the text to lower case. These are customaizable options.
 
 ### Force Parent Branch
 Sometimes you want to be sure that every branch you are making with the extension are from specific parent. For example `staging` branch.
