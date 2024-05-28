@@ -121,8 +121,8 @@ export async function fetchText(
       if (!maxLength) {
         return;
       }
-      if (value && value.length > 50) {
-        return `${field} must be less than 50 characters`;
+      if (value && value.length > maxLength) {
+        return `${field} must be less than ${maxLength} characters`;
       }
       return;
     },
