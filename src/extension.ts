@@ -6,8 +6,6 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     "conventional-branch.newBranch",
     async () => {
-      //
-
       // read the format from settings
       const settings = await fetchSettings();
       const {
@@ -20,22 +18,15 @@ export function activate(context: vscode.ExtensionContext) {
         removeBranchNameWhiteSpace,
         type,
       } = settings;
-
       // extract the fields from the format
-      const fields = extractFileds(format as string);
+      const fields = extractFields(format);
       // sequentially fetch the values for each field
       const values: string[] = [];
       for await (const field of fields) {
         if (field === "Type") {
-          const value = await fetchType(type);
-          if (value) {
-            values.push(value);
-          }
-          if (!value) {
-            return;
-          }
-        } else if (field === "TicketNumber") {
-          const value = await fetchText("Ticket Number");
+          const value = await vscode.window.showQuickPick(type, {
+            placeHolder: "Select a Branch Type",
+          });
           if (value) {
             values.push(value);
           }
@@ -61,16 +52,33 @@ export function activate(context: vscode.ExtensionContext) {
           if (value) {
             value = value.replace(/\s/g, branchNameSeparator);
           }
+
           if (value) {
             values.push(value);
           }
         } else {
-          const value = await fetchText(field);
-          if (value) {
-            values.push(value);
-          }
-          if (!value) {
-            return;
+          const fieldType = getFieldType(field);
+          if (fieldType === 'string') {
+            const value = await fetchText(field);
+            if (value) {
+              values.push(value);
+            }
+            if (!value) {
+              return;
+            }
+          } else if (fieldType === 'selector') {
+            const textWithoutOptions = field.split('[')[0];
+            const value = await vscode.window.showQuickPick(extractOptions(field), {
+              placeHolder: `Select a ${textWithoutOptions}`,
+            });
+            if (value) {
+              values.push(value);
+            }
+            if (!value) {
+              return;
+            }
+          } else {
+            throw new Error('Invalid field type: ' + fieldType);
           }
         }
       }
@@ -94,15 +102,6 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(disposable);
-}
-
-export function deactivate() {}
-
-async function fetchType(types: string[]) {
-  const type = await vscode.window.showQuickPick(types, {
-    placeHolder: "Select a Branch Type",
-  });
-  return type;
 }
 
 export async function fetchText(
@@ -131,7 +130,7 @@ export async function fetchText(
 /**
  * fetch string out of text which are wrapped in {} for example if we give this string "{Type}/{TicketNumber}/{Branch}" we expect an array: ["Type", "TicketNumber", "Branch"]
  *  */
-function extractFileds(format: string) {
+export function extractFields(format: string) {
   const regex = /\{([^}]+)\}/g;
   const fields: string[] = [];
   let m;
@@ -149,6 +148,34 @@ function extractFileds(format: string) {
     });
   }
   return fields;
+}
+
+/**
+ * We have two types of fields: string and selector. This function will return the type of the field
+ * @param field string like this: Author[Poorshad,John,Smith] or Author
+ * @returns `string` or `selector`
+ */
+export function getFieldType(field: string): 'string' | 'selector' {
+  if (field.includes('[') && field.includes(']')) {
+    return 'selector';
+  }
+  if ((field.includes('[') && !field.includes(']')) || (!field.includes('[') && field.includes(']'))){
+    throw new Error('Invalid Selector Field format: ' + field);
+  }
+  return 'string';
+}
+
+/**
+ * Extract options from a string like this: `Author[Poorshad,John,Smith]` and return an array of options `["Poorshad", "John", "Smith"]`
+ */
+export function extractOptions(field: string) {
+  const regex = /\[(.*)\]/;
+  const match = field.match(regex);
+  if (!match) {
+    throw new Error('Invalid Selector Field format: ' + field);
+  }
+  const options = match[1].split(',');
+  return options;
 }
 
 async function useGitApi(branch: string, forcedParentBranch?: string | null) {
