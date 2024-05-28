@@ -90,9 +90,10 @@ export function activate(context: vscode.ExtensionContext) {
       // replace { and } with empty string
       branch = branch.replace(/{/g, "");
       branch = branch.replace(/}/g, "");
+      branch = branch.replace(/\s/g, branchNameSeparator);
 
       try {
-        await useGitApi(branch, forcedParentBranch);
+        await createGitBranch(branch, forcedParentBranch);
       } catch (error) {
         vscode.window.showInformationMessage(
           `We want to create this branch: ${branch} but we got this error: ${error}`
@@ -178,7 +179,7 @@ export function extractOptions(field: string) {
   return options;
 }
 
-async function useGitApi(branch: string, forcedParentBranch?: string | null) {
+async function createGitBranch(branch: string, forcedParentBranch?: string | null) {
   const extension =
     vscode.extensions.getExtension<GitExtension>("vscode.git")?.exports;
   if (extension !== undefined) {
@@ -194,12 +195,13 @@ async function useGitApi(branch: string, forcedParentBranch?: string | null) {
         try {
           await repository.createBranch(branch, true);
         } catch (error) {
-          vscode.window.showErrorMessage(`Failed to create branch ${branch}`);
+          vscode.window.showErrorMessage(`Failed to create branch ${branch} from ${forcedParentBranch} branch. Error: ${error}`);
           return;
         }
       } catch (error) {
+
         vscode.window.showErrorMessage(
-          `Failed to checkout ${forcedParentBranch}`
+          `Failed to checkout ${forcedParentBranch} branch. Error: ${error}`
         );
         return;
       }
@@ -207,6 +209,7 @@ async function useGitApi(branch: string, forcedParentBranch?: string | null) {
       try {
         await repository.createBranch(branch, true);
       } catch (error) {
+        console.log(error);
         vscode.window.showErrorMessage(`Failed to create branch ${branch}`);
         return;
       }
