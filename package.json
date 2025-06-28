@@ -2,7 +2,7 @@
   "name": "conventional-branch",
   "displayName": "Conventional Branch",
   "description": "Customizable Conventional Branch for VSCode",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "publisher": "pshaddel",
   "engines": {
     "vscode": "^1.75.0"

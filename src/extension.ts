@@ -1,11 +1,76 @@
 import * as vscode from "vscode";
-import { GitExtension } from "./git";
+import { GitExtension, Repository } from "./git";
 import { fetchSettings } from "./settings";
+import * as path from 'path';
 
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     "conventional-branch.newBranch",
     async () => {
+      // check if git extension is available and get the git API
+      const extension =
+        vscode.extensions.getExtension<GitExtension>("vscode.git")?.exports;
+      if (!extension) {
+        vscode.window.showErrorMessage(
+          "Git extension not found. Please install the Git extension."
+        );
+        return;
+      };
+      const git = extension.getAPI(1);
+
+      let folder: vscode.WorkspaceFolder | undefined;
+      let repository: Repository | undefined;
+      // is it multi-root workspace?
+      if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 1) {
+        // if yes, then show a quick pick to select the workspace folder
+        // if there are multiple workspace folders, we need to select one
+        if (git.repositories.length === 0) {
+          vscode.window.showErrorMessage(
+            "No Git repositories found in the workspace. Please open a folder with a Git repository."
+          );
+          return;
+        };
+
+        // show a quick pick to select the workspace folder + current branch of each repository
+        const workspaceFolders = git.repositories.map((repo) => {
+          const folder = vscode.workspace.getWorkspaceFolder(repo.rootUri);
+          return {
+            // workspace folder name or root URI base
+            label: folder?.name || path.basename(repo.rootUri.fsPath),
+            description: repo.state.HEAD ? repo.state.HEAD.name : "No branch",
+            repository: repo,
+          };
+        });
+
+
+        const selectedFolder = await vscode.window.showQuickPick(workspaceFolders, {
+          placeHolder: "Select a workspace folder",
+        });
+        if (!selectedFolder) {
+          return;
+        }
+        // get the selected workspace folder
+        const workspaceFolder = vscode.workspace.workspaceFolders.find(
+          (folder) => folder.uri.fsPath === selectedFolder.repository.rootUri.fsPath
+        );
+        if (!workspaceFolder) {
+          vscode.window.showErrorMessage("Workspace folder not found");
+          return;
+        }
+        folder = workspaceFolder;
+        repository = selectedFolder.repository;
+      } else {
+        // if there is only one workspace folder, use it
+        folder = vscode.workspace.workspaceFolders?.[0];
+        if (!folder) {
+          vscode.window.showErrorMessage(
+            "No workspace folder found. Please open a folder with a Git repository."
+          );
+          return;
+        }
+        repository = git.repositories[0];
+      };
+
       // read the format from settings
       const settings = await fetchSettings();
       const {
@@ -93,7 +158,7 @@ export function activate(context: vscode.ExtensionContext) {
       branch = branch.replace(/\s/g, branchNameSeparator);
 
       try {
-        await createGitBranch(branch, forcedParentBranch);
+        await createGitBranch(repository, branch, forcedParentBranch);
       } catch (error) {
         vscode.window.showInformationMessage(
           `We want to create this branch: ${branch} but we got this error: ${error}`
@@ -179,12 +244,10 @@ export function extractOptions(field: string) {
   return options;
 }
 
-async function createGitBranch(branch: string, forcedParentBranch?: string | null) {
-  const extension =
-    vscode.extensions.getExtension<GitExtension>("vscode.git")?.exports;
-  if (extension !== undefined) {
-    const api = extension.getAPI(1);
-    const repository = api.repositories ? api.repositories[0] : undefined;
+async function createGitBranch(
+  repository: Repository | undefined,
+  branch: string,
+  forcedParentBranch?: string | null) {
     if (!repository) {
       vscode.window.showErrorMessage("No repository found");
       return;
@@ -214,7 +277,4 @@ async function createGitBranch(branch: string, forcedParentBranch?: string | nul
         return;
       }
     }
-  } else {
-    throw new Error("Git extension not found");
-  }
 }
