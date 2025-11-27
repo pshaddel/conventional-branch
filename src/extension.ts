@@ -45,6 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         const selectedFolder = await vscode.window.showQuickPick(workspaceFolders, {
           placeHolder: "Select a workspace folder",
+          ignoreFocusOut: true
         });
         if (!selectedFolder) {
           return;
@@ -91,6 +92,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (field === "Type") {
           const value = await vscode.window.showQuickPick(type, {
             placeHolder: "Select a Branch Type",
+            ignoreFocusOut: true
           });
           if (value) {
             values.push(value);
@@ -135,6 +137,7 @@ export function activate(context: vscode.ExtensionContext) {
             const textWithoutOptions = field.split('[')[0];
             const value = await vscode.window.showQuickPick(extractOptions(field), {
               placeHolder: `Select a ${textWithoutOptions}`,
+              ignoreFocusOut: true
             });
             if (value) {
               values.push(value);
