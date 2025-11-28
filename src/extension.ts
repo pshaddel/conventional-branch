@@ -180,6 +180,7 @@ export async function fetchText(
 ) {
   return vscode.window.showInputBox({
     placeHolder: `Enter a ${field}`,
+    ignoreFocusOut: true,
     validateInput: (value) => {
       if (minLength) {
         if (!value || value.length < minLength) {
